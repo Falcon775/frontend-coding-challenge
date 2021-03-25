@@ -79,7 +79,7 @@ const TodosList = () => {
 
   return (
     <Grid container justify={'center'} alignItems={'center'}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={11} md={6}>
         <Paper className={classes.root}>
           {isLoading && <LinearProgress />}
           <List>
