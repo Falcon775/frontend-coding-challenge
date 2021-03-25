@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import PropTypes from 'prop-types';
 
 // Material UI
 import ListItem from '@material-ui/core/ListItem'
@@ -11,11 +12,9 @@ import Checkbox from '@material-ui/core/Checkbox'
 import IconButton from '@material-ui/core/IconButton'
 import ErrorIcon from '@material-ui/icons/Error'
 
-const TodoItem = ({ todo, handleUpdate }) => {
-    const { id, description, dueDate, isComplete } = todo
+const TodoItem = ({ id, description, dueDate, isComplete, handleUpdate }) => {
     const formatedDueDate = dueDate ? moment(dueDate).format('MMMM Do YYYY') : ''
     const labelId = `checkbox-list-label-${id}`;
-
     const dateNow = moment()
     const isOverdue = moment(dueDate).isBefore(dateNow) && !isComplete
 
@@ -44,4 +43,12 @@ const TodoItem = ({ todo, handleUpdate }) => {
     );
 }
 
-export default TodoItem
+TodoItem.propTypes = {
+    id: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    dueDate: PropTypes.string.isRequired,
+    isComplete: PropTypes.bool.isRequired,
+    handleUpdate: PropTypes.func.isRequired,
+  };
+
+export default React.memo(TodoItem)

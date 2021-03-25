@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 // Material UI
 import { makeStyles } from '@material-ui/core/styles'
@@ -51,7 +51,7 @@ const TodosList = () => {
     })()
   }, [])
 
-  const handleUpdate = async (id) => {
+  const handleUpdate = useCallback(async (id) => {
     setLoading(true)
     try {
       const updatingTodoIndex = todos.findIndex(todo => todo.id === id)
@@ -75,7 +75,7 @@ const TodosList = () => {
     } catch (e) {
       setLoading(false)
     }
-  }
+  }, [todos])
 
   return (
     <Grid container justify={'center'} alignItems={'center'}>
@@ -83,7 +83,19 @@ const TodosList = () => {
         <Paper className={classes.root}>
           {isLoading && <LinearProgress />}
           <List>
-            {todos.map((todo) => <TodoItem key={todo.id} todo={todo} handleUpdate={handleUpdate} />)}
+            {todos.map((todo) => {
+              const { id, description, dueDate, isComplete } = todo
+              return (
+                <TodoItem
+                  key={id}
+                  id={id}
+                  description={description}
+                  dueDate={dueDate}
+                  isComplete={isComplete}
+                  handleUpdate={handleUpdate}
+                />
+              )
+            })}
           </List>
         </Paper>
       </Grid>
