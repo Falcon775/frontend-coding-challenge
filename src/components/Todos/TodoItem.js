@@ -46,7 +46,7 @@ const TodoItem = ({ id, description, dueDate, isComplete, handleUpdate }) => {
 TodoItem.propTypes = {
     id: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    dueDate: PropTypes.string.isRequired,
+    dueDate: PropTypes.string,
     isComplete: PropTypes.bool.isRequired,
     handleUpdate: PropTypes.func.isRequired,
   };
