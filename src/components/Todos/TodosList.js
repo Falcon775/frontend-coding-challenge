@@ -23,7 +23,6 @@ const useStyles = makeStyles(() => ({
 
 const TodosList = () => {
   const classes = useStyles();
-
   const [todos, setTodos] = useState([]);
   const [isLoading, setLoading] = useState(false)
 
@@ -34,25 +33,22 @@ const TodosList = () => {
       .sort((a, b) => (a.isComplete === b.isComplete) ? 0 : a.isComplete ? 1 : -1)
   }
 
-  const getTodos = async () => {
-    setLoading(true)
-
-    try {
-      const todos = await API.getTodos()
-
-      if (todos && todos.length) {
-        const sortedTodos = sortTodos(todos)
-        setTodos(sortedTodos)
-      }
-      
-      setLoading(false)
-    } catch (e) {
-      setLoading(false)
-    }
-  }
-
   useEffect(() => {
-    getTodos()
+    (async () => {
+      setLoading(true)
+      try {
+        const todos = await API.getTodos()
+
+        if (todos && todos.length) {
+          const sortedTodos = sortTodos(todos)
+          setTodos(sortedTodos)
+        }
+
+        setLoading(false)
+      } catch (e) {
+        setLoading(false)
+      }
+    })()
   }, [])
 
   const handleUpdate = async (id) => {
@@ -87,7 +83,7 @@ const TodosList = () => {
         <Paper className={classes.root}>
           {isLoading && <LinearProgress />}
           <List>
-            {todos.map((todo) => <TodoItem todo={todo} handleUpdate={handleUpdate} />)}
+            {todos.map((todo) => <TodoItem key={todo.id} todo={todo} handleUpdate={handleUpdate} />)}
           </List>
         </Paper>
       </Grid>

@@ -31,7 +31,6 @@ const TodoItem = ({ todo, handleUpdate }) => {
                 />
             </ListItemIcon>
             <ListItemText primary={description} secondary={formatedDueDate} />
-            <ListItemText primary={isComplete} />
             {isOverdue &&
                 <ListItemSecondaryAction>
                     <Tooltip title="Overdue item" placement="top">

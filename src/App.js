@@ -1,5 +1,7 @@
 
 import './App.css';
+
+// components
 import Header from './components/Header/Header';
 import TodosList from './components/Todos/TodosList';
 
